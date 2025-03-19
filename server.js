@@ -1,39 +1,57 @@
-// Importeer het npm package Express (uit de door npm aangemaakte node_modules map)
-// Deze package is geïnstalleerd via `npm install`, en staat als 'dependency' in package.json
 import express from 'express'
-
-// Importeer de Liquid package (ook als dependency via npm geïnstalleerd)
 import { Liquid } from 'liquidjs';
 
-// Maak een nieuwe Express applicatie aan, waarin we de server configureren
 const app = express()
-
 // Maak werken met data uit formulieren iets prettiger
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'));
 
-// Gebruik de map 'public' voor statische bestanden (resources zoals CSS, JavaScript, afbeeldingen en fonts)
-// Bestanden in deze map kunnen dus door de browser gebruikt worden
-app.use(express.static('public'))
-
-// Stel Liquid in als 'view engine'
 const engine = new Liquid();
 app.engine('liquid', engine.express());
+app.set('views', './views');
 
-// Stel de map met Liquid templates in
-// Let op: de browser kan deze bestanden niet rechtstreeks laden (zoals voorheen met HTML bestanden)
-app.set('views', './views')
+const baseURL = "https://fdnd-agency.directus.app/items/tm_"
 
+// https://expressjs.com/en/5x/api.html#app.get.method
+app.get("/", async function (req, res) {
+  let stories = await fetch(`${baseURL}story`);
+  let seasons = await fetch(`${baseURL}season`);
+  let languages = await fetch(`${baseURL}language`);
+  let animals = await fetch(`${baseURL}animal`);
+  let playlists = await fetch(`${baseURL}playlist`);
 
-console.log('Let op: Er zijn nog geen routes. Voeg hier dus eerst jouw GET en POST routes toe.')
-
-/*
-// Zie https://expressjs.com/en/5x/api.html#app.get.method over app.get()
-app.get(…, async function (request, response) {
+  let storiesJSON = await stories.json();
+  let seasonsJSON = await seasons.json();
+  let languagesJSON = await languages.json();
+  let animalsJSON = await animals.json();
+  let playlistsJSON = await playlists.json();
   
   // Zie https://expressjs.com/en/5x/api.html#res.render over response.render()
-  response.render(…)
+  res.render('index.liquid', {
+    stories: storiesJSON.data,
+    seasons: seasonsJSON.data,
+    languages: languagesJSON.data,
+    animals: animalsJSON.data,
+    playlists: playlistsJSON.data,
+  }
+  )
 })
-*/
+
+app.post("/", async function (req, res) {
+  await fetch("", {
+    method: 'POST',
+    body: JSON.stringify({
+      playlist: req.params.playlist,
+      profile: req.params.profile
+    }),
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8'
+    }
+  });
+
+  res.redirect(303, '/');
+});
+
 
 /*
 // Zie https://expressjs.com/en/5x/api.html#app.post.method over app.post()

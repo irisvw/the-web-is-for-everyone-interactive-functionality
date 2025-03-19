@@ -1,0 +1,63 @@
+{% render 'partials/head.liquid' %}
+
+<header>
+  <h1>Lessons</h1>
+</header>
+
+<main>
+  <section>
+    <h2>Your playlists</h2>
+    <ul>
+      {% for playlist in playlists %}
+        <li>
+          <h3>{{ playlist.title }}</h3>
+          <img
+            src="https://fdnd-agency.directus.app/assets/{{ playlist.image }}"
+            alt=""
+            height="100">
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <section>
+    <h2>All stories</h2>
+    <ul>
+      {% for story in stories %}
+        <li>
+          <h3>{{ story.title }}</h3>
+          <img
+            src="https://fdnd-agency.directus.app/assets/{{ story.image }}"
+            alt=""
+            height="100">
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <section>
+    <h2>Liked playlists</h2>
+    <ul>
+      {% for playlist in playlists %}
+        <li>{{ playlist.title }}</li>
+        <form action="">
+          <button type="submit">♡</button>
+        </form>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <section>
+    <h2>Suggested playlists</h2>
+    <ul>
+      {% for playlist in playlists %}
+        <li>{{ playlist.title }}</li>
+        <form action="">
+          <button type="submit">♡</button>
+        </form>
+      {% endfor %}
+    </ul>
+  </section>
+</main>
+
+{% render 'partials/foot.liquid' %}
