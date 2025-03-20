@@ -2,6 +2,12 @@
 
 <main>
   <h1>Lessons</h1>
+
+  <ol class="progress">
+    <li>Listening</li>
+    <li>Locked</li>
+  </ol>
+
   <section>
     <h2>Your playlists</h2>
     <ul class="list-horizontal">
@@ -28,6 +34,7 @@
             src="https://fdnd-agency.directus.app/assets/{{ story.image | default: "2d0c060b-e899-4a81-8e7e-dbd42c666616" }}"
             alt=""
             height="100">
+            <p class="playtime">123</p>
         </li>
       {% endfor %}
     </ul>
@@ -38,11 +45,17 @@
     <ul class="list-horizontal">
       {% for playlist in playlists %}
         <li class="card-vertical">
-          {{ playlist.title }}
-          </li>
+          <img
+            src="https://fdnd-agency.directus.app/assets/{{ playlist.image | default: "2d0c060b-e899-4a81-8e7e-dbd42c666616" }}"
+            alt=""
+            height="100">
+          <h3>{{ playlist.title }}</h3>
+          
+          <p class="playtime">1234</p>
         <form action="">
           <button type="submit">♡</button>
         </form>
+        </li>
       {% endfor %}
     </ul>
   </section>
@@ -52,11 +65,17 @@
     <ul class="list-horizontal">
       {% for playlist in playlists %}
         <li class="card-vertical">
-          {{ playlist.title }}
-          </li>
+          <img
+            src="https://fdnd-agency.directus.app/assets/{{ playlist.image | default: "2d0c060b-e899-4a81-8e7e-dbd42c666616" }}"
+            alt=""
+            height="100">
+          <h3>{{ playlist.title }}</h3>
+          
+          <p class="playtime">1234</p>
         <form action="">
           <button type="submit">♡</button>
         </form>
+        </li>
       {% endfor %}
     </ul>
   </section>
