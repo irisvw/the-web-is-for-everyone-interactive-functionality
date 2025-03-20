@@ -1,20 +1,18 @@
 {% render 'partials/head.liquid' %}
 
-<header>
-  <h1>Lessons</h1>
-</header>
-
 <main>
+  <h1>Lessons</h1>
   <section>
     <h2>Your playlists</h2>
-    <ul>
+    <ul class="list-horizontal">
       {% for playlist in playlists %}
-        <li>
-          <h3>{{ playlist.title }}</h3>
+        <li class="card-vertical">
           <img
-            src="https://fdnd-agency.directus.app/assets/{{ playlist.image }}"
+            src="https://fdnd-agency.directus.app/assets/{{ playlist.image | default: "2d0c060b-e899-4a81-8e7e-dbd42c666616" }}"
             alt=""
             height="100">
+          <h3>{{ playlist.title }}</h3>
+          <p class="playtime">1234</p>
         </li>
       {% endfor %}
     </ul>
@@ -22,12 +20,12 @@
 
   <section>
     <h2>All stories</h2>
-    <ul>
+    <ul class="list-grid">
       {% for story in stories %}
-        <li>
+        <li class="card-horizontal">
           <h3>{{ story.title }}</h3>
           <img
-            src="https://fdnd-agency.directus.app/assets/{{ story.image }}"
+            src="https://fdnd-agency.directus.app/assets/{{ story.image | default: "2d0c060b-e899-4a81-8e7e-dbd42c666616" }}"
             alt=""
             height="100">
         </li>
@@ -37,9 +35,11 @@
 
   <section>
     <h2>Liked playlists</h2>
-    <ul>
+    <ul class="list-horizontal">
       {% for playlist in playlists %}
-        <li>{{ playlist.title }}</li>
+        <li class="card-vertical">
+          {{ playlist.title }}
+          </li>
         <form action="">
           <button type="submit">♡</button>
         </form>
@@ -49,9 +49,11 @@
 
   <section>
     <h2>Suggested playlists</h2>
-    <ul>
+    <ul class="list-horizontal">
       {% for playlist in playlists %}
-        <li>{{ playlist.title }}</li>
+        <li class="card-vertical">
+          {{ playlist.title }}
+          </li>
         <form action="">
           <button type="submit">♡</button>
         </form>
@@ -59,5 +61,7 @@
     </ul>
   </section>
 </main>
+
+<button></button>
 
 {% render 'partials/foot.liquid' %}

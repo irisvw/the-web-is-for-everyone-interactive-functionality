@@ -1,0 +1,111 @@
+@import url("tumi.css");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--background-method);
+  color: white;
+  font-family: 'Poppins', sans-serif;
+}
+
+main {
+  margin: auto;
+  max-width: 500px;
+}
+
+section {
+  margin-bottom: 2rem;
+}
+
+h1,
+h2,
+h3 {
+  margin: .5em;
+}
+
+h1 {
+  width: max-content;
+  margin: 1em auto;
+}
+
+.card-vertical,
+.card-horizontal {
+  display: grid;
+  background-color: white;
+  color: black;
+  list-style: none;
+  border-radius: 8px;
+}
+
+.card-vertical {
+  display: grid;
+  height: 18rem;
+  width: 12rem;
+  padding: 1rem;
+
+  img {
+    height: 9rem;
+    aspect-ratio: 1 / 1;
+    max-height: 9rem;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+
+  h3 {
+    margin: 0;
+    max-width: 100%;
+    text-wrap: balance;
+    height: 2lh;
+    overflow: hidden;
+    white-space: wrap;
+    text-overflow: ellipsis;
+  }
+}
+
+.card-horizontal {
+  width: 20rem;
+  height: 6rem;
+  padding: .5rem;
+
+  display: grid;
+  grid-template-columns: 5rem 1fr;
+  grid-template-rows: 1fr 1fr;
+
+  scroll-snap-align: start;
+
+  img {
+    grid-row: 1 / -1;
+    grid-column: 1 / 2;
+    height: 5rem;
+    width: 5rem;
+    border-radius: 5px;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+  }
+}
+
+.list-horizontal,
+.list-grid {
+  scrollbar-width: none;
+  gap: .5rem;
+}
+
+.list-horizontal {
+  display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
+
+}
+
+.list-grid {
+  display: grid;
+  grid-template-rows: repeat(3, max-content);
+  grid-auto-columns: max-content;
+  grid-auto-flow: column;
+  overflow-y: scroll;
+  scroll-snap-type: x mandatory;
+}
