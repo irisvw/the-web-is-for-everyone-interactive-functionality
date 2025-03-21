@@ -45,7 +45,7 @@
             src="https://fdnd-agency.directus.app/assets/{{ story.image | default: "2d0c060b-e899-4a81-8e7e-dbd42c666616" }}"
             alt=""
             height="80">
-            <p class="playtime">123</p>
+          <p class="playtime">123</p>
         </li>
       {% endfor %}
     </ul>
@@ -61,12 +61,21 @@
             alt=""
             height="144">
           <h3>{{ playlist.title }}</h3>
-          
           <p class="playtime">1234</p>
-        <form action="">
-          <button type="submit">♡</button>
-        </form>
+
+          {% if liked %}
+            <form method="post" action="/154/{{ playlist.id }}/unlike">
+              <button type="submit">Unlike 💔</button>
+            </form>
+          {% else %}
+            <form method="post" action="/154/{{ playlist.id }}/like">
+              <button type="submit">Like ❤️</button>
+            </form>
+          {% endif %}
+
         </li>
+      {% else %}
+        <p>Tap the ❤️ at any playlists you love!</p>
       {% endfor %}
     </ul>
   </section>
@@ -81,17 +90,22 @@
             alt=""
             height="100">
           <h3>{{ playlist.title }}</h3>
-          
           <p class="playtime">1234</p>
-        <form action="">
-          <button type="submit">♡</button>
-        </form>
+
+          {% if liked %}
+            <form method="post" action="/Iris/{{ playlist.id }}/unlike">
+              <button type="submit">Unlike 💔</button>
+            </form>
+          {% else %}
+            <form method="post" action="/Iris/{{ playlist.id }}/like">
+              <button type="submit">Like ❤️</button>
+            </form>
+          {% endif %}
+
         </li>
       {% endfor %}
     </ul>
   </section>
 </main>
-
-<button></button>
 
 {% render 'partials/foot.liquid' %}
