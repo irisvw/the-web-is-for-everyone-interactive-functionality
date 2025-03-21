@@ -54,6 +54,38 @@ ol.progress {
   }
 }
 
+.story-options {
+  display: flex;
+  flex-direction: row;
+  gap: .5rem;
+  min-width: 100%;
+  list-style: none;
+  padding: 0 1rem .5rem 1rem;
+
+  li:has(a) {
+    margin-left: auto;
+  }
+
+  a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  button {
+    appearance: none;
+    color: black;
+    background-color: white;
+    padding: .5em;
+    border-radius: 8px;
+    border: none;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+}
+
 .card-vertical,
 .card-horizontal {
   display: grid;
