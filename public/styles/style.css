@@ -7,7 +7,7 @@
 }
 
 body {
-  background: #471871;
+  background-color: #471871;
   background: linear-gradient(in hsl to bottom, #471871, #142151);
   background: var(--background-method);
   color: white;
