@@ -10,10 +10,18 @@ const engine = new Liquid();
 app.engine('liquid', engine.express());
 app.set('views', './views');
 
-const baseURL = "https://fdnd-agency.directus.app/items/tm_"
+const baseURL = "https://fdnd-agency.directus.app/items/tm_";
+
+const defaultProfile = 124;
 
 // https://expressjs.com/en/5x/api.html#app.get.method
 app.get("/", async function (req, res) {
+  let likes = await fetch(`${baseURL}likes`);
+  // fetch all the likes
+  // for every playlist, check if it occurs in likes? no, inefficient.
+  // make a list of all the liked playlists
+  // unliked_playlists = all_playlists - liked_playlists
+
   let stories = await fetch(`${baseURL}story`);
   let seasons = await fetch(`${baseURL}season`);
   let languages = await fetch(`${baseURL}language`);
@@ -33,24 +41,42 @@ app.get("/", async function (req, res) {
     languages: languagesJSON.data,
     animals: animalsJSON.data,
     playlists: playlistsJSON.data,
-  }
-  )
+  });
 })
 
-app.post("/", async function (req, res) {
-  await fetch("", {
+app.post(`/:profile/:playlist/like`, async function (req, res) {
+  const results = await fetch(`${baseURL}likes`, {
     method: 'POST',
     body: JSON.stringify({
+      profile: defaultProfile,
       playlist: req.params.playlist,
-      profile: req.params.profile
     }),
     headers: {
       'Content-Type': 'application/json;charset=UTF-8'
     }
   });
+  console.log(req.params.playlist);
+  console.log(results);
+
+  // if client side JS post thingamajingy
+  // render partial
+  // else
+  // redirect naar /
 
   res.redirect(303, '/');
 });
+
+app.post('/:profile/:playlist/unlike', async function (request, response) {
+  const like = await fetch(`${baseURL}likes?filter[_and][0][profile][_eq]=${defaultProfile}&filter[_and][1][playlist][_eq]=${request.params.playlist}`);
+  const likeJSON = await like.json();
+  const likeID = likeJSON.data[0].id;
+
+  // await fetch(`https://fdnd.directus.app/items/messages/${likeID}`, {
+  //   method: 'DELETE'
+  // });
+
+  response.redirect(303, `/${defaultProfile}`);
+})
 
 
 /*
