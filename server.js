@@ -14,28 +14,41 @@ const baseURL = "https://fdnd-agency.directus.app/items/tm_";
 
 const defaultProfile = 124;
 
+let stories = await fetch(`${baseURL}story`);
+let seasons = await fetch(`${baseURL}season`);
+let languages = await fetch(`${baseURL}language`);
+let animals = await fetch(`${baseURL}animal`);
+let playlists = await fetch(`${baseURL}playlist`);
+
+let storiesJSON = await stories.json();
+let seasonsJSON = await seasons.json();
+let languagesJSON = await languages.json();
+let animalsJSON = await animals.json();
+let playlistsJSON = await playlists.json();
+
 // https://expressjs.com/en/5x/api.html#app.get.method
 app.get("/", async function (req, res) {
-  let likes = await fetch(`${baseURL}likes`);
+  let likes = await fetch(`${baseURL}likes?fields=*.*&filter[_and][0][profile][id][_eq]=${defaultProfile}&filter[_and][1][playlist][_nnull]`);
   // fetch all the likes
   // for every playlist, check if it occurs in likes? no, inefficient.
   // make a list of all the liked playlists
   // unliked_playlists = all_playlists - liked_playlists
+  let likesJSON = await likes.json();
+  console.log(likesJSON.data);
 
-  let stories = await fetch(`${baseURL}story`);
-  let seasons = await fetch(`${baseURL}season`);
-  let languages = await fetch(`${baseURL}language`);
-  let animals = await fetch(`${baseURL}animal`);
-  let playlists = await fetch(`${baseURL}playlist`);
-
-  let storiesJSON = await stories.json();
-  let seasonsJSON = await seasons.json();
-  let languagesJSON = await languages.json();
-  let animalsJSON = await animals.json();
-  let playlistsJSON = await playlists.json();
-  
   // Zie https://expressjs.com/en/5x/api.html#res.render over response.render()
   res.render('index.liquid', {
+    stories: storiesJSON.data,
+    seasons: seasonsJSON.data,
+    languages: languagesJSON.data,
+    animals: animalsJSON.data,
+    playlists: playlistsJSON.data,
+    likedPlaylists: likesJSON.data,
+  });
+})
+
+app.get("/stories", async function (req, res) {
+  res.render('stories.liquid', {
     stories: storiesJSON.data,
     seasons: seasonsJSON.data,
     languages: languagesJSON.data,
@@ -45,7 +58,7 @@ app.get("/", async function (req, res) {
 })
 
 app.post(`/:profile/:playlist/like`, async function (req, res) {
-  const results = await fetch(`${baseURL}likes`, {
+  await fetch(`${baseURL}likes`, {
     method: 'POST',
     body: JSON.stringify({
       profile: defaultProfile,
@@ -55,8 +68,6 @@ app.post(`/:profile/:playlist/like`, async function (req, res) {
       'Content-Type': 'application/json;charset=UTF-8'
     }
   });
-  console.log(req.params.playlist);
-  console.log(results);
 
   // if client side JS post thingamajingy
   // render partial
@@ -68,14 +79,17 @@ app.post(`/:profile/:playlist/like`, async function (req, res) {
 
 app.post('/:profile/:playlist/unlike', async function (request, response) {
   const like = await fetch(`${baseURL}likes?filter[_and][0][profile][_eq]=${defaultProfile}&filter[_and][1][playlist][_eq]=${request.params.playlist}`);
+  console.log(like);
   const likeJSON = await like.json();
   const likeID = likeJSON.data[0].id;
 
-  // await fetch(`https://fdnd.directus.app/items/messages/${likeID}`, {
-  //   method: 'DELETE'
-  // });
+  const result = await fetch(`${baseURL}likes/${likeID}`, {
+    method: 'DELETE'
+  });
 
-  response.redirect(303, `/${defaultProfile}`);
+  console.log(result);
+
+  response.redirect(303, `/`);
 })
 
 
