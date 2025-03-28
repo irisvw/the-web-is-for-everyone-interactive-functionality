@@ -34,7 +34,7 @@
         <button>English</button>
       </li>
       <li>
-        <a href="stories.liquid">Show all</a>
+        <a href="stories">Show all</a>
       </li>
     </ul>
     <ul class="list-grid">
@@ -54,25 +54,18 @@
   <section>
     <h2>Liked playlists</h2>
     <ul class="list-horizontal">
-      {% for playlist in playlists %}
+      {% for likedPlaylist in likedPlaylists %}
         <li class="card-vertical">
           <img
-            src="https://fdnd-agency.directus.app/assets/{{ playlist.image | default: "2d0c060b-e899-4a81-8e7e-dbd42c666616" }}"
+            src="https://fdnd-agency.directus.app/assets/{{ likedPlaylist.playlist.image | default: "2d0c060b-e899-4a81-8e7e-dbd42c666616" }}"
             alt=""
             height="144">
-          <h3>{{ playlist.title }}</h3>
+          <h3>{{ likedPlaylist.playlist.title }}</h3>
           <p class="playtime">1234</p>
 
-          {% if liked %}
-            <form method="post" action="/154/{{ playlist.id }}/unlike">
-              <button type="submit">Unlike 💔</button>
-            </form>
-          {% else %}
-            <form method="post" action="/154/{{ playlist.id }}/like">
-              <button type="submit">Like ❤️</button>
-            </form>
-          {% endif %}
-
+          <form method="post" action="/Iris/{{ likedPlaylist.playlist.id }}/unlike">
+            <button type="submit">Unlike 💔</button>
+          </form>
         </li>
       {% else %}
         <p>Tap the ❤️ at any playlists you love!</p>
@@ -92,16 +85,9 @@
           <h3>{{ playlist.title }}</h3>
           <p class="playtime">1234</p>
 
-          {% if liked %}
-            <form method="post" action="/Iris/{{ playlist.id }}/unlike">
-              <button type="submit">Unlike 💔</button>
-            </form>
-          {% else %}
-            <form method="post" action="/Iris/{{ playlist.id }}/like">
-              <button type="submit">Like ❤️</button>
-            </form>
-          {% endif %}
-
+          <form method="post" action="/Iris/{{ playlist.id }}/like">
+            <button type="submit">Like ❤️</button>
+          </form>
         </li>
       {% endfor %}
     </ul>

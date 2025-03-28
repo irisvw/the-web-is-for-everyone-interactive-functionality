@@ -4,7 +4,11 @@
   <h1>All stories</h1>
 
   <nav>
-    <form role="search" class="searchbox" action="/search" method="get">
+    <form
+      role="search"
+      class="searchbox"
+      action="/search"
+      method="get">
       <label for="search">
         <input
           type="search"
@@ -74,7 +78,7 @@
   <ul class="stories">
     {% for story in stories %}
       {% assign language = languages | find: "id", story.language %}
-      <li>
+      <li class="card-horizontal">
         <img src="https://fdnd-agency.directus.app/assets/{{ story.image }}" alt="">
         <h2>{{ story.title }}</h2>
 
