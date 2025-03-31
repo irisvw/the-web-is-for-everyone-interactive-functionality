@@ -1,0 +1,29 @@
+<ul class="list-horizontal">
+  {% for playlist in playlists %}
+    <li class="card-vertical">
+      <img
+        src="https://fdnd-agency.directus.app/assets/{{ playlist.image | default: "2d0c060b-e899-4a81-8e7e-dbd42c666616" }}"
+        alt=""
+        height="144">
+      <h3>{{ playlist.title }}</h3>
+      <p class="playtime">1234</p>
+
+      {% if action == "like" %}
+        <form
+          method="post"
+          action="/124/{{ playlist.id }}/like"
+          data-enhanced="form-{{ playlist.id }}">
+          <button type="submit">Like ❤️</button>
+        </form>
+
+      {% elsif action == "unlike" %}
+        <form
+          method="post"
+          action="/124/{{ playlist.id }}/unlike"
+          data-enhanced="form-{{ playlist.id }}">
+          <button type="submit">Unlike 💔</button>
+        </form>
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>

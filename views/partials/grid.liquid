@@ -1,0 +1,13 @@
+<ul class="list-grid">
+  {% for story in stories %}
+    <li class="card-horizontal">
+      <h3>{{ story.title }}</h3>
+      <img
+        src="https://fdnd-agency.directus.app/assets/{{ story.image | default: "
+          2d0c060b-e899-4a81-8e7e-dbd42c666616" }}"
+        alt=""
+        height="80">
+      <p class="playtime">123</p>
+    </li>
+  {% endfor %}
+</ul>

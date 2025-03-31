@@ -2,7 +2,6 @@ import express from 'express'
 import { Liquid } from 'liquidjs';
 
 const app = express()
-// Maak werken met data uit formulieren iets prettiger
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
@@ -18,7 +17,7 @@ let stories = await fetch(`${baseURL}story`);
 let seasons = await fetch(`${baseURL}season`);
 let languages = await fetch(`${baseURL}language`);
 let animals = await fetch(`${baseURL}animal`);
-let playlists = await fetch(`${baseURL}playlist`);
+let playlists = await fetch(`${baseURL}playlist?fields=creator,id,title,image`);
 
 let storiesJSON = await stories.json();
 let seasonsJSON = await seasons.json();
@@ -27,20 +26,31 @@ let animalsJSON = await animals.json();
 let playlistsJSON = await playlists.json();
 
 app.get("/", async function (req, res) {
-  let likes = await fetch(`${baseURL}likes?fields=*.*&filter[_and][0][profile][id][_eq]=${defaultProfile}&filter[_and][1][playlist][_nnull]`);
-  // fetch all the likes
-  // for every playlist, check if it occurs in likes? no, inefficient.
-  // make a list of all the liked playlists
-  // unliked_playlists = all_playlists - liked_playlists
+  let likes = await fetch(`${baseURL}likes?fields=playlist&filter[_and][0][profile][id][_eq]=${defaultProfile}&filter[_and][1][playlist][_nnull]`);
   let likesJSON = await likes.json();
+  let likesArray = likesJSON.data.map(a => a.playlist); // convert array of objects to array of values
+  let playlistsArray = playlistsJSON.data;
+
+  const yourPlaylists = playlistsArray.filter((playlist) => playlist.creator == defaultProfile);
+  const likedPlaylists = playlistsArray.filter((playlist) => likesArray.includes(playlist.id));
+  const suggestedPlaylists = playlistsArray.filter((playlist => !likesArray.includes(playlist.id)));
+
+  // console.log(playlistsJSON.data);
+  // console.log("Your playlists:");
+  // console.log(yourPlaylists);
+  // console.log("Liked playlists:");
+  // console.log(likedPlaylists);
+  // console.log("Suggested playlists:");
+  // console.log(suggestedPlaylists);
 
   res.render('index.liquid', {
     stories: storiesJSON.data,
     seasons: seasonsJSON.data,
     languages: languagesJSON.data,
     animals: animalsJSON.data,
-    playlists: playlistsJSON.data,
-    likedPlaylists: likesJSON.data,
+    suggestedPlaylists: suggestedPlaylists,
+    likedPlaylists: likedPlaylists,
+    yourPlaylists: yourPlaylists
   });
 })
 
@@ -66,11 +76,6 @@ app.post(`/:profile/:playlist/like`, async function (req, res) {
     }
   });
 
-  // if client side JS post thingamajingy
-  // render partial
-  // else
-  // redirect naar /
-
   res.redirect(303, '/');
 });
 
@@ -86,41 +91,8 @@ app.post('/:profile/:playlist/unlike', async function (request, response) {
   response.redirect(303, `/`);
 })
 
-
-/*
-// Zie https://expressjs.com/en/5x/api.html#app.post.method over app.post()
-app.post(…, async function (request, response) {
-
-  // In request.body zitten alle formuliervelden die een `name` attribuut hebben in je HTML
-  console.log(request.body)
-
-  // Via een fetch() naar Directus vullen we nieuwe gegevens in
-
-  // Zie https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch over fetch()
-  // Zie https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify over JSON.stringify()
-  // Zie https://docs.directus.io/reference/items.html#create-an-item over het toevoegen van gegevens in Directus
-  // Zie https://docs.directus.io/reference/items.html#update-an-item over het veranderen van gegevens in Directus
-  await fetch(…, {
-    method: …,
-    body: JSON.stringify(…),
-    headers: {
-      'Content-Type': 'application/json;charset=UTF-8'
-    }
-  });
-
-  // Redirect de gebruiker daarna naar een logische volgende stap
-  // Zie https://expressjs.com/en/5x/api.html#res.redirect over response.redirect()
-  response.redirect(303, …)
-})
-*/
-
-
-// Stel het poortnummer in waar Express op moet gaan luisteren
-// Lokaal is dit poort 8000; als deze applicatie ergens gehost wordt, waarschijnlijk poort 80
 app.set('port', process.env.PORT || 8000)
 
-// Start Express op, gebruik daarbij het zojuist ingestelde poortnummer op
 app.listen(app.get('port'), function () {
-  // Toon een bericht in de console
   console.log(`Daarna kun je via http://localhost:${app.get('port')}/ jouw interactieve website bekijken.\n\nThe Web is for Everyone. Maak mooie dingen 🙂`)
 })
