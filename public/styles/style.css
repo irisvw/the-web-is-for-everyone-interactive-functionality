@@ -139,10 +139,6 @@ ol.progress {
 
   scroll-snap-align: start;
 
-  &:nth-child(-n + 3) {
-    margin-left: 1rem;
-  }
-
   img {
     grid-row: 1 / -1;
     grid-column: 1 / 2;
@@ -184,6 +180,10 @@ ol.progress {
   overflow-y: scroll;
   scroll-snap-type: x mandatory;
   scroll-padding-left: 1rem;
+
+  .card-horizontal:nth-child(-n + 3) {
+    margin-left: 1rem;
+  }
 }
 
 /* SEARCHBOX */
@@ -247,6 +247,8 @@ ol.progress {
   }
 }
 
+/* FILTERS */
+
 .filters {
   display: flex;
   flex-direction: row;
@@ -307,5 +309,59 @@ ol.progress {
   a {
     color: white;
     text-decoration: none;
+  }
+}
+
+/* ALL STORIES */
+.stories {
+  margin-top: 1.5em;
+  gap: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stories li {
+  h2 {
+    font-size: 1rem;
+    align-self: flex-end;
+  }
+
+  >img {
+    height: 100%;
+    padding: .25em;
+    border-radius: 10px;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    grid-column: 1;
+    grid-row: 1 / -1;
+  }
+
+  .buttons {
+    grid-column: 3;
+    grid-row: 3;
+    display: flex;
+    flex-direction: row;
+    justify-self: flex-end;
+    align-self: flex-end;
+    gap: 1em;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .button-image {
+    appearance: none;
+    border: none;
+    background-color: transparent;
+
+    >img {
+      height: 2em;
+    }
+
+    .button-add {
+      transform: rotateZ(45deg);
+    }
   }
 }

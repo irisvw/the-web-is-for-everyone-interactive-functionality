@@ -26,7 +26,6 @@ let languagesJSON = await languages.json();
 let animalsJSON = await animals.json();
 let playlistsJSON = await playlists.json();
 
-// https://expressjs.com/en/5x/api.html#app.get.method
 app.get("/", async function (req, res) {
   let likes = await fetch(`${baseURL}likes?fields=*.*&filter[_and][0][profile][id][_eq]=${defaultProfile}&filter[_and][1][playlist][_nnull]`);
   // fetch all the likes
@@ -34,9 +33,7 @@ app.get("/", async function (req, res) {
   // make a list of all the liked playlists
   // unliked_playlists = all_playlists - liked_playlists
   let likesJSON = await likes.json();
-  console.log(likesJSON.data);
 
-  // Zie https://expressjs.com/en/5x/api.html#res.render over response.render()
   res.render('index.liquid', {
     stories: storiesJSON.data,
     seasons: seasonsJSON.data,
@@ -79,15 +76,12 @@ app.post(`/:profile/:playlist/like`, async function (req, res) {
 
 app.post('/:profile/:playlist/unlike', async function (request, response) {
   const like = await fetch(`${baseURL}likes?filter[_and][0][profile][_eq]=${defaultProfile}&filter[_and][1][playlist][_eq]=${request.params.playlist}`);
-  console.log(like);
   const likeJSON = await like.json();
   const likeID = likeJSON.data[0].id;
 
-  const result = await fetch(`${baseURL}likes/${likeID}`, {
+  await fetch(`${baseURL}likes/${likeID}`, {
     method: 'DELETE'
   });
-
-  console.log(result);
 
   response.redirect(303, `/`);
 })

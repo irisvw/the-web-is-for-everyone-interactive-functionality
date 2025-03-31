@@ -14,7 +14,8 @@
       {% for playlist in playlists %}
         <li class="card-vertical">
           <img
-            src="https://fdnd-agency.directus.app/assets/{{ playlist.image | default: "2d0c060b-e899-4a81-8e7e-dbd42c666616" }}"
+            src="https://fdnd-agency.directus.app/assets/{{ playlist.image | default: "
+          2d0c060b-e899-4a81-8e7e-dbd42c666616" }}"
             alt=""
             height="144">
           <h3>{{ playlist.title }}</h3>
@@ -42,7 +43,8 @@
         <li class="card-horizontal">
           <h3>{{ story.title }}</h3>
           <img
-            src="https://fdnd-agency.directus.app/assets/{{ story.image | default: "2d0c060b-e899-4a81-8e7e-dbd42c666616" }}"
+            src="https://fdnd-agency.directus.app/assets/{{ story.image | default: "
+          2d0c060b-e899-4a81-8e7e-dbd42c666616" }}"
             alt=""
             height="80">
           <p class="playtime">123</p>
@@ -57,13 +59,17 @@
       {% for likedPlaylist in likedPlaylists %}
         <li class="card-vertical">
           <img
-            src="https://fdnd-agency.directus.app/assets/{{ likedPlaylist.playlist.image | default: "2d0c060b-e899-4a81-8e7e-dbd42c666616" }}"
+            src="https://fdnd-agency.directus.app/assets/{{ likedPlaylist.playlist.image | default: "
+          2d0c060b-e899-4a81-8e7e-dbd42c666616" }}"
             alt=""
             height="144">
           <h3>{{ likedPlaylist.playlist.title }}</h3>
           <p class="playtime">1234</p>
 
-          <form method="post" action="/Iris/{{ likedPlaylist.playlist.id }}/unlike">
+          <form
+            method="post"
+            action="/124/{{ likedPlaylist.playlist.id }}/unlike"
+            data-enhanced="form-{{ likedPlaylist.playlist.id }}">
             <button type="submit">Unlike 💔</button>
           </form>
         </li>
@@ -79,13 +85,17 @@
       {% for playlist in playlists %}
         <li class="card-vertical">
           <img
-            src="https://fdnd-agency.directus.app/assets/{{ playlist.image | default: "2d0c060b-e899-4a81-8e7e-dbd42c666616" }}"
+            src="https://fdnd-agency.directus.app/assets/{{ playlist.image | default: "
+          2d0c060b-e899-4a81-8e7e-dbd42c666616" }}"
             alt=""
             height="100">
           <h3>{{ playlist.title }}</h3>
           <p class="playtime">1234</p>
 
-          <form method="post" action="/Iris/{{ playlist.id }}/like">
+          <form
+            method="post"
+            action="/124/{{ playlist.id }}/like"
+            data-enhanced="form-{{ playlist.id }}">
             <button type="submit">Like ❤️</button>
           </form>
         </li>
@@ -95,3 +105,35 @@
 </main>
 
 {% render 'partials/foot.liquid' %}
+
+<script type="module">
+  const baseURL = "https://fdnd-agency.directus.app/items/tm_";
+  const defaultProfile = 124;
+  
+  if ('fetch' in window && 'DOMParser' in window) {
+    document.addEventListener('submit', async function (event) {
+      const form = event.target;
+  
+      if (!form.hasAttribute('data-enhanced')) {
+        return;
+      }
+  
+      event.preventDefault();
+  
+      const response = await fetch(form.action, {
+        method: form.method,
+        body: new URLSearchParams(new FormData(form))
+      });
+  
+      const responseText = await response.text();
+  
+      const parser = new DOMParser();
+      const responseDOM = parser.parseFromString(responseText, 'text/html');
+  
+      const newState = responseDOM.querySelector('[data-enhanced="' + form.getAttribute('data-enhanced') + '"]');
+  
+      // Hier wil je waarschijnlijk de Loading state vervangen door een Success state
+      form.outerHTML = newState.outerHTML;
+    })
+  }
+</script>
