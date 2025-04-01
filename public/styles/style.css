@@ -1,5 +1,6 @@
 @import url("tumi.css");
 
+/* GENERAL STYLES */
 * {
   margin: 0;
   padding: 0;
@@ -34,6 +35,16 @@ h1 {
   margin: 1em auto .5em auto;
 }
 
+p {
+  margin-inline: 1em;
+}
+
+nav {
+  max-width: 90dvw;
+  margin: auto;
+}
+
+/* Progress */
 ol.progress {
   margin: auto;
   width: 20rem;
@@ -49,13 +60,14 @@ ol.progress {
     width: 100%;
     flex-shrink: 0;
     border-radius: 8px;
-    list-style-position: inside; 
+    list-style-position: inside;
     background-color: green;
     padding: .5rem 1rem;
     scroll-snap-align: start;
   }
 }
 
+/* Story options: language selector, show all */
 .story-options {
   display: flex;
   flex-direction: row;
@@ -63,6 +75,7 @@ ol.progress {
   min-width: 100%;
   list-style: none;
   padding: 0 1rem .5rem 1rem;
+  align-items: center;
 
   li:has(a) {
     margin-left: auto;
@@ -85,9 +98,9 @@ ol.progress {
     font-weight: 600;
     font-size: 1rem;
   }
-
 }
 
+/* Story/playlist cards */
 .card-vertical,
 .card-horizontal {
   display: grid;
@@ -95,6 +108,10 @@ ol.progress {
   color: black;
   list-style: none;
   border-radius: 8px;
+
+  p {
+    margin: 0;
+  }
 }
 
 .card-vertical {
@@ -119,6 +136,7 @@ ol.progress {
     overflow: hidden;
     white-space: wrap;
     text-overflow: ellipsis;
+    align-content: center;
   }
 
   &:first-of-type {
@@ -159,6 +177,7 @@ ol.progress {
   }
 }
 
+/* Horizontal and grid-style lists */
 .list-horizontal,
 .list-grid {
   scrollbar-width: none;
@@ -169,7 +188,6 @@ ol.progress {
   display: flex;
   flex-direction: row;
   overflow-x: scroll;
-
 }
 
 .list-grid {
@@ -193,38 +211,38 @@ ol.progress {
 }
 
 .searchbox label {
-	height: 2em;
-	display: grid;
+  height: 2em;
+  display: grid;
   grid-row: 1 / 2;
-	grid-column: 1 / 3;
+  grid-column: 1 / 3;
 }
 
 .searchbox input {
-	grid-row: 1 / 2;
-	grid-column: 1 / 2;
-	
-	appearance: none;
+  grid-row: 1 / 2;
+  grid-column: 1 / 2;
+
+  appearance: none;
   border: none;
-	border-radius: 5px;
-	background-color: white;
-	color: black;
-	padding: .8em;
-	align-self: center;
+  border-radius: 5px;
+  background-color: white;
+  color: black;
+  padding: .8em;
+  align-self: center;
 }
 
 .searchbox span {
-	grid-row: 1 / 2;
-	grid-column: 1 / 2;
+  grid-row: 1 / 2;
+  grid-column: 1 / 2;
 
   color: rgba(0, 0, 0, 0.6);
-	transition: all .25s;
-	margin-left: .5em;
-	align-self: center;
+  transition: all .25s;
+  margin-left: .5em;
+  align-self: center;
 }
 
-.searchbox input:focus + span,
-.searchbox input:not(:placeholder-shown) + span {
-	color: rgba(0, 0, 0, 0);
+.searchbox input:focus+span,
+.searchbox input:not(:placeholder-shown)+span {
+  color: rgba(0, 0, 0, 0);
 }
 
 .searchbox button {
@@ -248,7 +266,6 @@ ol.progress {
 }
 
 /* FILTERS */
-
 .filters {
   display: flex;
   flex-direction: row;
@@ -260,7 +277,8 @@ ol.progress {
   color: white;
   background-color: #8654F3;
   border-radius: 5px;
-  margin: .5em 0;
+  margin: .5em auto;
+  max-width: 90dvw;
 }
 
 .summary-top-level {
@@ -274,7 +292,6 @@ ol.progress {
   background-color: #8654F3;
   padding: .5em 1em;
   border-radius: 5px;
-  /* list-style: none; */
 
   button {
     appearance: none;
@@ -313,15 +330,25 @@ ol.progress {
 }
 
 /* ALL STORIES */
-.stories {
+.list-vertical {
   margin-top: 1.5em;
-  gap: 1em;
-  display: flex;
-  flex-direction: column;
   align-items: center;
+
+  .card-horizontal {
+    width: 100%;
+    list-style: none;
+    border-radius: 10px;
+    padding: .5em;
+    margin: .5em auto;
+    background-color: white;
+    max-width: min(90dvw, 500px);
+    height: 6rem;
+  }
 }
 
-.stories li {
+.list-vertical li {
+  margin: .5em 0;
+
   h2 {
     font-size: 1rem;
     align-self: flex-end;

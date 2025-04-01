@@ -75,12 +75,12 @@
   </details>
 
 
-  <ul class="stories">
+  <ul class="list-vertical">
     {% for story in stories %}
       {% assign language = languages | find: "id", story.language %}
       <li class="card-horizontal">
         <img src="https://fdnd-agency.directus.app/assets/{{ story.image }}" alt="">
-        <h2>{{ story.title }}</h2>
+        <h3>{{ story.title }}</h2>
 
         <div class="playtime">
           <span class="lang {{ language.language | downcase }}">{{ language.language }}</span>
