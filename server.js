@@ -10,7 +10,6 @@ app.engine('liquid', engine.express());
 app.set('views', './views');
 
 const baseURL = "https://fdnd-agency.directus.app/items/tm_";
-
 const defaultProfile = 124;
 
 let stories = await fetch(`${baseURL}story`);
@@ -28,20 +27,16 @@ let playlistsJSON = await playlists.json();
 app.get("/", async function (req, res) {
   let likes = await fetch(`${baseURL}likes?fields=playlist&filter[_and][0][profile][id][_eq]=${defaultProfile}&filter[_and][1][playlist][_nnull]`);
   let likesJSON = await likes.json();
-  let likesArray = likesJSON.data.map(a => a.playlist); // convert array of objects to array of values
+  // convert array of objects to array of values
+  let likesArray = likesJSON.data.map(a => a.playlist);
   let playlistsArray = playlistsJSON.data;
 
+  // for each playlist, check if the creator matches the defaultProfile
   const yourPlaylists = playlistsArray.filter((playlist) => playlist.creator == defaultProfile);
+  // for each playlist, check if the id is featured in the likesArray
   const likedPlaylists = playlistsArray.filter((playlist) => likesArray.includes(playlist.id));
+  // for each playlist, check if the id is NOT featured in the likesArray
   const suggestedPlaylists = playlistsArray.filter((playlist => !likesArray.includes(playlist.id)));
-
-  // console.log(playlistsJSON.data);
-  // console.log("Your playlists:");
-  // console.log(yourPlaylists);
-  // console.log("Liked playlists:");
-  // console.log(likedPlaylists);
-  // console.log("Suggested playlists:");
-  // console.log(suggestedPlaylists);
 
   res.render('index.liquid', {
     stories: storiesJSON.data,
@@ -79,8 +74,8 @@ app.post(`/:profile/:playlist/like`, async function (req, res) {
   res.redirect(303, '/');
 });
 
-app.post('/:profile/:playlist/unlike', async function (request, response) {
-  const like = await fetch(`${baseURL}likes?filter[_and][0][profile][_eq]=${defaultProfile}&filter[_and][1][playlist][_eq]=${request.params.playlist}`);
+app.post('/:profile/:playlist/unlike', async function (req, res) {
+  const like = await fetch(`${baseURL}likes?filter[_and][0][profile][_eq]=${defaultProfile}&filter[_and][1][playlist][_eq]=${req.params.playlist}`);
   const likeJSON = await like.json();
   const likeID = likeJSON.data[0].id;
 
@@ -88,7 +83,7 @@ app.post('/:profile/:playlist/unlike', async function (request, response) {
     method: 'DELETE'
   });
 
-  response.redirect(303, `/`);
+  res.redirect(303, `/`);
 })
 
 app.set('port', process.env.PORT || 8000)
