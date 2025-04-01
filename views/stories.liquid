@@ -1,7 +1,10 @@
 {% render 'partials/head.liquid'
   , title: 'Stories' %}
 <main>
-  <h1>All stories</h1>
+  <header class="header-stories">
+    <a href="/">Home</a>
+    <h1>All stories</h1>
+  </header>
 
   <nav>
     <form
@@ -79,12 +82,12 @@
     {% for story in stories %}
       {% assign language = languages | find: "id", story.language %}
       <li class="card-horizontal">
-        <img src="https://fdnd-agency.directus.app/assets/{{ story.image }}" alt="">
+        <img src="https://fdnd-agency.directus.app/assets/{{ story.image.id }}" alt="">
         <h3>{{ story.title }}</h2>
 
-        <div class="playtime">
-          <span class="lang {{ language.language | downcase }}">{{ language.language }}</span>
-          <p>{{ story.playtime }}</p>
+        <div>
+          <span class="lang {{ story.language.language | downcase }}">{{ story.language.language }}</span>
+          <p class="playtime">{{ story.playtime }}</p>
         </div>
 
         <div class="buttons hidden">
