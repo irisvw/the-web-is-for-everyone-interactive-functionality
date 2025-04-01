@@ -48,6 +48,7 @@ nav {
 ol.progress {
   margin: auto;
   width: 20rem;
+  max-width: 90dvw;
   display: flex;
   flex-direction: row;
   gap: 1rem;
@@ -115,15 +116,17 @@ ol.progress {
 }
 
 .card-vertical {
-  display: grid;
   height: 18rem;
-  width: 12rem;
+  width: 11rem;
   padding: 1rem;
+
+  grid-template-rows: 10rem 1fr 1fr;
+  grid-template-columns: 1fr;
 
   img {
     height: 9rem;
-    aspect-ratio: 1 / 1;
     max-height: 9rem;
+    aspect-ratio: 1 / 1;
     object-fit: cover;
     border-radius: 5px;
   }
@@ -137,10 +140,41 @@ ol.progress {
     white-space: wrap;
     text-overflow: ellipsis;
     align-content: center;
+    grid-row: 2 / 3;
   }
 
   &:first-of-type {
     margin-left: 1rem;
+  }
+
+  p.playtime {
+    grid-row: 3 / 4;
+    grid-column: 1 / 2;
+    justify-self: start;
+    align-self: center;
+  }
+
+  form {
+    width: fit-content;
+    grid-row: 3 / 4;
+    grid-column: 1 / 2;
+    justify-self: end;
+    display: flex;
+    align-items: center;
+  }
+
+  form button {
+    appearance: none;
+    background-color: transparent;
+    border: 0;
+    height: 2.5rem;
+    width: 2.5rem;
+
+    svg {
+      height: 100%;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+    }
   }
 }
 
@@ -204,6 +238,28 @@ ol.progress {
   }
 }
 
+
+.header-stories {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  align-items: center;
+
+  h1, a {
+    grid-row: 1 / 2;
+    grid-column: 1 / 2;
+    margin: 1em 0 .5em 0;
+  }
+
+  h1 {
+    justify-self: center;
+  }
+
+  a {
+    color: white;
+    justify-self: start;
+  }
+}
 /* SEARCHBOX */
 .searchbox {
   display: grid;
