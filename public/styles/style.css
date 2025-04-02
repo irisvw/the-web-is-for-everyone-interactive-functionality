@@ -44,7 +44,7 @@ nav {
   margin: auto;
 }
 
-/* Progress */
+/* Lessons page: progress */
 ol.progress {
   margin: auto;
   width: 20rem;
@@ -68,7 +68,7 @@ ol.progress {
   }
 }
 
-/* Story options: language selector, show all */
+/* Lessons page: story options (language selector, show all) */
 .story-options {
   display: flex;
   flex-direction: row;
@@ -101,7 +101,7 @@ ol.progress {
   }
 }
 
-/* Story/playlist cards */
+/* Lessons page: story/playlist cards */
 .card-vertical,
 .card-horizontal {
   display: grid;
@@ -238,12 +238,12 @@ ol.progress {
   }
 }
 
-
+/* Stories overview: header */
 .header-stories {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
-  align-items: center;
+  align-items: baseline;
   max-width: 90dvw;
   margin: 0 auto;
 
@@ -262,7 +262,8 @@ ol.progress {
     justify-self: start;
   }
 }
-/* SEARCHBOX */
+
+/* Stories overview: searchbox */
 .searchbox {
   display: grid;
   grid-template-columns: 1fr min-content;
@@ -323,7 +324,7 @@ ol.progress {
   }
 }
 
-/* FILTERS */
+/* Stories overview: filters */
 .filters {
   display: flex;
   flex-direction: row;
@@ -387,7 +388,7 @@ ol.progress {
   }
 }
 
-/* ALL STORIES */
+/* Stories overview: list */
 .list-vertical {
   margin-top: 1.5em;
   align-items: center;
@@ -451,6 +452,7 @@ ol.progress {
   }
 }
 
-.test {
+/* Loading state */
+.loading {
   opacity: 0.5;
 }
