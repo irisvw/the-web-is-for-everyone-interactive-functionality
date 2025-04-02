@@ -244,6 +244,8 @@ ol.progress {
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
   align-items: center;
+  max-width: 90dvw;
+  margin: 0 auto;
 
   h1, a {
     grid-row: 1 / 2;
