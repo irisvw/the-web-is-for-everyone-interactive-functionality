@@ -74,7 +74,7 @@
       }
   
       event.preventDefault();
-      form.classList.add('loading')
+      form.classList.add('loading');
   
       const response = await fetch(form.action, {
         method: form.method,
@@ -90,6 +90,6 @@
   
       // Hier wil je waarschijnlijk de Loading state vervangen door een Success state
       form.outerHTML = newState.outerHTML;
-    })
+    });
   }
 </script>
