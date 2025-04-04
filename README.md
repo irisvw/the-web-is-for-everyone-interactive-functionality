@@ -14,7 +14,7 @@
 ## Beschrijving
 
 <!-- Bij Beschrijving staat kort beschreven wat voor project het is en wat je hebt gemaakt -->
-Ik heb de overzichtspagina van de lessen van TuMi Mundo gemaakt. Deze pagina bevat een overzicht van alle stories die je kunt beluisteren. Je kunt je eigen playlists bekijken, direct navigeren naar een overzicht van alle stories, of je gelikede playlists zien. Ook is er een sectie van gesuggereerde playlists.
+Ik heb de overzichtspagina van de lessen van TuMi Mundo gemaakt. Deze pagina bevat een overzicht van alle stories en playlists die je kunt beluisteren. Je kunt je eigen playlists bekijken, direct navigeren naar een overzicht van alle stories, of je gelikede playlists zien. Ook is er een sectie van gesuggereerde playlists.
 
 <!-- Voeg een mooie poster visual of video toe 📸 -->
 #### Screenshots
