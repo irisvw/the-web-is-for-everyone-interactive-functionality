@@ -209,6 +209,10 @@ ol.progress {
     white-space: nowrap;
     text-overflow: ellipsis;
   }
+
+  p.playtime {
+    display: inline-block;
+  }
 }
 
 /* Horizontal and grid-style lists */
